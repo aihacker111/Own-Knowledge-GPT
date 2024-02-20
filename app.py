@@ -1,4 +1,6 @@
 import gradio as gr
+import os 
+from thread import Thread 
 from typing import Optional, Tuple
 from queue import Empty, Queue
 from threading import Thread
@@ -91,7 +93,7 @@ def on_apply_settings_button_click(
         temperature=temperature,
         streaming=True,
         callbacks=[QueueCallback(Queue())],
-        max_tokens=1000,
+        max_tokens=1500,
     )
     chat.callbacks[0].queue.empty()
     return chat, *on_clear_button_click(system_prompt)
@@ -155,7 +157,7 @@ def main():
                     temperature = gr.Slider(
                         minimum=0.0,
                         maximum=1.0,
-                        value=0.7,
+                        value=0.8,
                         step=0.1,
                         label="temperature",
                         interactive=True,
@@ -205,5 +207,5 @@ def main():
 if __name__ == '__main__':
     demo = main()
     demo.queue()
-    demo.launch(share=True)
+    demo.launch(share=False)
     
